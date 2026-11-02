@@ -86,6 +86,7 @@
         var shouldOpen = typeof force === 'boolean' ? force : !mobileMenu.classList.contains('is-open');
         mobileMenu.classList.toggle('is-open', shouldOpen);
         toggle.setAttribute('aria-expanded', shouldOpen ? 'true' : 'false');
+        document.body.style.overflow = shouldOpen ? 'hidden' : '';
     }
 
     if (toggle && mobileMenu) {
@@ -93,6 +94,13 @@
         // Close menu when a link is tapped
         mobileMenu.querySelectorAll('a').forEach(function (link) {
             link.addEventListener('click', function () { toggleMenu(false); });
+        });
+
+        // Close menu when clicking anywhere outside of it
+        document.addEventListener('click', function (e) {
+            if (!mobileMenu.classList.contains('is-open')) return;
+            if (mobileMenu.contains(e.target) || toggle.contains(e.target)) return;
+            toggleMenu(false);
         });
     }
 

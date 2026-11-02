@@ -60,17 +60,29 @@
 
         if (!btn || !menu) return;
 
+        function setMenuOpen(open) {
+            menu.classList.toggle('hidden', !open);
+            if (nav) nav.classList.toggle('menu-open', open);
+            btn.setAttribute('aria-expanded', String(open));
+            document.body.style.overflow = open ? 'hidden' : '';
+        }
+
         btn.addEventListener('click', function () {
-            menu.classList.toggle('hidden');
-            if (nav) nav.classList.toggle('menu-open', !menu.classList.contains('hidden'));
+            setMenuOpen(menu.classList.contains('hidden'));
         });
 
         // Close the menu when a link inside it is clicked
         menu.querySelectorAll('a').forEach(function (link) {
             link.addEventListener('click', function () {
-                menu.classList.add('hidden');
-                if (nav) nav.classList.remove('menu-open');
+                setMenuOpen(false);
             });
+        });
+
+        // Close the menu when clicking anywhere outside of it
+        document.addEventListener('click', function (e) {
+            if (menu.classList.contains('hidden')) return;
+            if (menu.contains(e.target) || btn.contains(e.target)) return;
+            setMenuOpen(false);
         });
     }
 

@@ -1,0 +1,144 @@
+/* ==========================================================
+   OTHARO — Team member profile pages
+   ========================================================== */
+
+.member-section {
+    position: relative;
+    overflow: hidden;
+    background-color: #ffffff;
+}
+
+/* Subtle doodle texture behind the written content */
+.member-section::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("assets/doodle.png");
+    background-repeat: repeat;
+    background-position: center top;
+    background-size: 75% auto;
+    opacity: 0.1;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.member-section > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* Full-height split hero: portrait left, details right */
+.member-hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 100vh;
+}
+
+.member-portrait-panel {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    min-height: 100vh;
+    overflow: hidden;
+    background: transparent;
+}
+
+.member-figure {
+    position: relative;
+    display: block;
+    width: min(90%, 76.8vh);
+    aspect-ratio: 1080 / 1350;
+    line-height: 0;
+}
+
+.member-figure img {
+    position: relative;
+    z-index: 2;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: bottom;
+    background: transparent;
+}
+
+/* Circle sits behind the subject's head */
+.member-circle {
+    position: absolute;
+    left: 50%;
+    top: 29%;
+    width: 48%;
+    aspect-ratio: 1;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: #F2994A;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.member-info {
+    display: flex;
+    align-items: center;
+    min-height: 100vh;
+    padding: 8rem clamp(2rem, 5vw, 5rem) 5rem;
+}
+
+.member-info-inner {
+    width: 100%;
+    max-width: 560px;
+}
+
+.member-eyebrow {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #F2994A;
+}
+
+.member-more {
+    padding: 5rem 0 6rem;
+}
+
+/* Small "more from the team" thumbnails */
+.member-mini {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    background: #FBE8D3;
+    box-shadow: 0 14px 30px -14px rgba(28, 25, 23, 0.35);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.member-mini img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+}
+
+.member-mini:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px -16px rgba(28, 25, 23, 0.45);
+}
+
+@media (max-width: 1023px) {
+    .member-hero {
+        grid-template-columns: 1fr;
+        min-height: 0;
+    }
+
+    .member-portrait-panel {
+        min-height: 62vh;
+    }
+
+    .member-figure {
+        width: min(88%, 420px, 48vh);
+    }
+
+    .member-info {
+        min-height: 0;
+        padding: 3rem 1.5rem 4rem;
+    }
+}

@@ -1,8 +1,8 @@
 /* =========================================================
    Otharo — About Us Page Scripts
-   Polaroid cluster: hover / tap / keyboard activates a single
-   card (straighten + caption) while siblings dim. Hover state
-   clears the moment the pointer leaves the cluster.
+   Polaroid cluster: hovering a card straightens it and shows
+   its caption while siblings dim. Each card is a link to the
+   member's profile page, so tap / click / Enter navigates.
    ========================================================= */
 
 (function () {
@@ -16,56 +16,30 @@
 
     function setActive(card, active) {
         cards.forEach(function (c) {
-            var on = active && c === card;
-            c.classList.toggle('is-active', on);
-            c.setAttribute('aria-expanded', on ? 'true' : 'false');
+            c.classList.toggle('is-active', active && c === card);
         });
         cluster.classList.toggle('js-focus', !!(active && card));
-    }
-
-    function activate(card) {
-        setActive(card, true);
-    }
-
-    function deactivate() {
-        setActive(null, false);
     }
 
     /* Desktop hover: follow the pointer across cards, clear on leave */
     if (!coarse) {
         cluster.addEventListener('mouseover', function (e) {
             var card = e.target && e.target.closest ? e.target.closest('.team-card') : null;
-            if (card && cluster.contains(card)) activate(card);
+            if (card && cluster.contains(card)) setActive(card, true);
         });
         cluster.addEventListener('mouseleave', function () {
-            deactivate();
+            setActive(null, false);
         });
     }
 
-    /* Keyboard support (works on any device) */
+    /* Keyboard: straighten the focused card, Escape clears it */
     cards.forEach(function (card) {
+        card.addEventListener('focus', function () { setActive(card, true); });
+        card.addEventListener('blur', function () {
+            if (!cluster.contains(document.activeElement)) setActive(null, false);
+        });
         card.addEventListener('keydown', function (e) {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                var on = !card.classList.contains('is-active');
-                setActive(card, on);
-            } else if (e.key === 'Escape') {
-                deactivate();
-            }
+            if (e.key === 'Escape') setActive(null, false);
         });
     });
-
-    /* Touch / tap: click toggles a pinned card (no hover on touch) */
-    if (coarse) {
-        cards.forEach(function (card) {
-            card.addEventListener('click', function (e) {
-                e.stopPropagation();
-                var on = !card.classList.contains('is-active');
-                setActive(card, on);
-            });
-        });
-        document.addEventListener('click', function (e) {
-            if (!e.target.closest('.team-card')) deactivate();
-        });
-    }
 })();

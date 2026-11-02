@@ -3,6 +3,33 @@
         background-color: #ffffff;
     }
 
+    /* Doodle pattern behind the About Us sections */
+    .team-section,
+    .history-section {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .team-section::before,
+    .history-section::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: url("assets/doodle.png");
+        background-repeat: repeat;
+        background-position: center top;
+        background-size: 75% auto;
+        opacity: 0.1;
+        pointer-events: none;
+        z-index: 0;
+    }
+
+    .team-section > *,
+    .history-section > * {
+        position: relative;
+        z-index: 1;
+    }
+
     /* ---- Cluster ---- */
     .team-cluster {
         display: grid;

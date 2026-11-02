@@ -64,9 +64,37 @@
     box-shadow: 0 4px 20px -8px rgba(0, 0, 0, 0.15);
 }
 
+/* Match the drawer's solid white while the mobile menu is open */
+#main-nav.menu-open {
+    background: #ffffff;
+}
+
 /* Keep the mobile toggle & logo readable over the dark video */
 #main-nav:not(.nav-solid):not(.menu-open) #mobile-menu-btn {
     color: #ffffff;
+}
+
+/* Full-height navigation opens from the right. */
+@keyframes menu-enter-right {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
+}
+
+#main-nav #mobile-menu:not(.hidden) {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        z-index: 60;
+        width: min(20rem, 85vw);
+        height: calc(100dvh - 5rem);
+        overflow-y: auto;
+        padding: 1.5rem 1.5rem 2rem;
+        background: #fff;
+        animation: menu-enter-right 0.25s ease-out;
+}
+
+@media (max-width: 1023px) {
+    #main-nav #mobile-menu:not(.hidden) { height: calc(100dvh - 4rem); }
 }
 
 /* Third row: slower leftward drift for the 3-row alternating logo wall */
@@ -434,7 +462,7 @@
 .nc-white-orange { background: #fff; border: 1px solid #f3e8d6; }
 .nc-orange        { background: #F2994A; }
 .nc-dark          { background: #1c1c1e; }
-.nc-white-green   { background: #fff; border: 1px solid #d1fae5; }
+.nc-terracotta    { background: #C2410C; }
 
 /* ── Icon badge (circle, top-right) ── */
 .nc-header {
@@ -454,7 +482,7 @@
 }
 .nc-badge-orange          { background: #F2994A; }
 .nc-badge-white-on-orange { background: #fff; }
-.nc-badge-green           { background: #10B981; }
+.nc-badge-white-on-terracotta { background: #fff; }
 
 /* ── Huge stat number ── */
 .nc-stat {
@@ -508,9 +536,9 @@
 .nc-dark .nc-sublabel,
 .nc-dark .nc-desc           { color: #F2994A; }
 
-.nc-white-green .nc-stat,
-.nc-white-green .nc-sublabel,
-.nc-white-green .nc-desc    { color: #10B981; }
+.nc-terracotta .nc-stat,
+.nc-terracotta .nc-sublabel,
+.nc-terracotta .nc-desc      { color: #fff; }
 
 /* Stat-card: reset opacity so old rule doesn't hide these */
 .stat-card { opacity: 0; }
